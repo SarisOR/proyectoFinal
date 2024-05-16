@@ -36,7 +36,8 @@
             android:hint="Digita tu nombre"
             android:gravity="left"
             android:textColorHint="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -53,7 +54,8 @@
             android:gravity="left"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -68,9 +70,11 @@
             android:id="@+id/edtDate"
             android:hint="Ingresa tu fecha de nacimiento"
             android:gravity="left"
-            android:inputType="date"
+            android:inputType="none"
             android:textColorHint="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:textColor="@color/black"
+            android:focusable="false"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,7 +91,8 @@
             android:gravity="left"
             android:inputType="textPassword"
             android:textColorHint="@color/black"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
     <Button
