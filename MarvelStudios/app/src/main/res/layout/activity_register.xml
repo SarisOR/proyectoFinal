@@ -34,7 +34,6 @@
             android:layout_height="50dp"
             android:id="@+id/edtName"
             android:hint="Digita tu nombre"
-            android:gravity="left"
             android:textColorHint="@color/black"
             android:layout_margin="10dp"
             android:textColor="@color/black"/>
@@ -51,7 +50,6 @@
             android:layout_height="50dp"
             android:id="@+id/edtEmail"
             android:hint="Digita tu email"
-            android:gravity="left"
             android:inputType="textEmailAddress"
             android:textColorHint="@color/black"
             android:layout_margin="10dp"
@@ -69,7 +67,6 @@
             android:layout_height="50dp"
             android:id="@+id/edtDate"
             android:hint="Ingresa tu fecha de nacimiento"
-            android:gravity="left"
             android:inputType="none"
             android:textColorHint="@color/black"
             android:layout_margin="10dp"
@@ -88,7 +85,6 @@
             android:layout_height="50dp"
             android:id="@+id/edtPassword"
             android:hint="Ingresa una contraseña"
-            android:gravity="left"
             android:inputType="textPassword"
             android:textColorHint="@color/black"
             android:layout_margin="10dp"
@@ -99,9 +95,10 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:id="@+id/btnRegister"
-        android:text="Regiestrarse"
+        android:text="Registrarse"
         android:layout_marginTop="20dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        app:cornerRadius="20dp"/>
 
 </LinearLayout>

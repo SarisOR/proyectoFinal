@@ -18,6 +18,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     EditText edtName, edtEmail, edtDate, edtPassword;
     Button btnRegister;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,6 @@ public class RegisterActivity extends AppCompatActivity {
         edtDate = findViewById(R.id.edtDate);
         edtPassword = findViewById(R.id.edtPassword);
         btnRegister = findViewById(R.id.btnRegister);
-        final SharedPreferences[] sharedPreferences = new SharedPreferences[1];
-        final SharedPreferences.Editor[] editor = new SharedPreferences.Editor[1];
         edtDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,15 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
                 String date = edtDate.getText().toString();
                 String password = edtPassword.getText().toString();
                 if (name.equals("") || email.equals("") || date.equals("") ||password.equals(""))
-                    Toast.makeText(RegisterActivity.this, "Por favor llenar los campos ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Por favor completar los campos ", Toast.LENGTH_SHORT).show();
                 else {
-                    sharedPreferences[0] = getSharedPreferences("user", Context.MODE_PRIVATE);
-                    editor[0] = sharedPreferences[0].edit();
-                    editor[0].putString("name", name);
-                    editor[0].putString("email", email);
-                    editor[0].putString("date", date);
-                    editor[0].putString("password", password);
-                    editor[0].apply();
+                    sharedPreferences= getSharedPreferences("user", Context.MODE_PRIVATE);
+                    editor = sharedPreferences.edit();
+                    editor.putString("name", name);
+                    editor.putString("email", email);
+                    editor.putString("date", date);
+                    editor.putString("password", password);
+                    editor.apply();
                     Toast.makeText(RegisterActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
                     startActivity(i);

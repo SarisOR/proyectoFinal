@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RequestFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".RequestFragment"
+    android:orientation="vertical"
+    android:background="@drawable/fondo">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Elige tu cómic"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_margin="20dp"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/spnComics"/>
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:text="Solicitar"
+            android:layout_gravity="center"
+            android:id="@+id/btnRequest"
+            android:backgroundTint="@color/red"
+            app:cornerRadius="20dp"
+            android:layout_margin="20dp"/>
+    </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

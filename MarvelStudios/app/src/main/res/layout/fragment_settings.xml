@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SettingsFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal|center_vertical"
@@ -12,13 +13,14 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:src="@drawable/marvel_logo"
-        android:contentDescription="Logo Marvel"/>
+        android:contentDescription="Logo Marvel"
+        android:layout_margin="20dp"/>
 
     <TextView
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:text="Nombre"
         android:layout_margin="10dp"
         android:textColor="@color/black"/>
@@ -26,7 +28,7 @@
         android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_margin="10dp"
         android:text="Correo"
         android:textColor="@color/black"/>
@@ -34,9 +36,9 @@
         android:id="@+id/txtDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_margin="10dp"
-        android:text="fecha"
+        android:text="Fecha"
         android:textColor="@color/black"/>
 
     <Button
@@ -45,6 +47,8 @@
         android:id="@+id/btnLogout"
         android:text="Cerrar sesión"
         android:textColor="@color/white"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        android:layout_margin="20dp"
+        app:cornerRadius="20dp"/>
 
 </LinearLayout>

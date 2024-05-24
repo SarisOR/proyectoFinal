@@ -19,7 +19,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:id="@+id/edtUser"
-        android:hint="Usuario"
+        android:hint="Correo electrónico"
         android:gravity="center"
         android:layout_marginTop="20dp"
         android:textColorHint="@color/black"
@@ -43,14 +43,16 @@
         android:text="Iniciar sesión"
         android:layout_marginTop="20dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        app:cornerRadius="20dp"/>
     <Button
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:id="@+id/btnRegister"
-        android:text="Regiestrarse"
+        android:text="Registrarse"
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
-        android:backgroundTint="@color/red"/>
+        android:backgroundTint="@color/red"
+        app:cornerRadius="20dp"/>
 
 </LinearLayout>
