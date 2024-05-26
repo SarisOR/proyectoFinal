@@ -46,7 +46,7 @@ public class RequestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String selectedComic = spnComics.getSelectedItem().toString();
-                if (selectedComic.isEmpty())
+                if (selectedComic.isEmpty() || selectedComic.equals("Selecciona un cómic"))
                     Toast.makeText(getContext(), "Por favor, seleccione un cómic", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getContext(), "Cómic seleccionado", Toast.LENGTH_SHORT).show();
@@ -78,15 +78,14 @@ public class RequestFragment extends Fragment {
 
     private void receiveResponse(JSONObject response) {
         try {
+            comicTitles.add("Selecciona un cómic");
             JSONObject data = response.getJSONObject("data");
             for (int i = 0; i<data.getJSONArray("results").length(); i++){
                 String title = data.getJSONArray("results").getJSONObject(i).getString("title");
                 comicTitles.add(title);
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, comicTitles);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-            // Asignar el adaptador al Spinner
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_style, comicTitles);
+            adapter.setDropDownViewResource(R.layout.spinner_style2);
             spnComics.setAdapter(adapter);
 
         } catch (JSONException e){

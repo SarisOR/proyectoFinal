@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,15 +32,19 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
 
     List<Superhero> superheroList = new ArrayList<>();
     RecyclerView rcvSuperhero;
+    SuperheroAdaptador adaptador;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         rcvSuperhero = view.findViewById(R.id.rcvSuperhero);
-        SuperheroAdaptador adaptador = new SuperheroAdaptador(superheroList);
+
+        rcvSuperhero.setLayoutManager(new LinearLayoutManager(getContext()));
+        adaptador = new SuperheroAdaptador(superheroList);
         rcvSuperhero.setAdapter(adaptador);
         adaptador.setOnItemClickListener(this);
+
         loadInfo();
         return view;
     }
@@ -74,10 +79,8 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
                 String image = data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("path") + "." + data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("extension");
                 Superhero s = new Superhero(name, id, image);
                 superheroList.add(s);
-                rcvSuperhero.setLayoutManager(new LinearLayoutManager(getContext()));
-                rcvSuperhero.setAdapter(new SuperheroAdaptador(superheroList));
             }
-
+            adaptador.notifyDataSetChanged();
         } catch (JSONException e){
             e.printStackTrace();
             Toast.makeText(getContext(), "Error"+e.getMessage(), Toast.LENGTH_LONG).show();

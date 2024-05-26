@@ -6,32 +6,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DetailsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/fondo"
+    android:gravity="center_vertical|center_horizontal">
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="50dp">
-        <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_vertical|center_horizontal">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtName"
-                android:text="Name"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtId"
-                android:text="Id"/>
-        </LinearLayout>
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:id="@+id/imgSuperhero"/>
+            android:id="@+id/txtName"
+            android:text="Name"
+            android:textSize="50sp"
+            android:textColor="@color/red"
+            android:textStyle="bold"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtId"
+            android:text="Id"
+            android:textColor="@color/black"/>
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/imgSuperhero"/>
 
 </LinearLayout>

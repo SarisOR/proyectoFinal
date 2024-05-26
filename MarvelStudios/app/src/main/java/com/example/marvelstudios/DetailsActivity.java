@@ -24,6 +24,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         txtName = findViewById(R.id.txtName);
+        txtId = findViewById(R.id.txtId);
         imgSuperhero = findViewById(R.id.imgSuperhero);
         Intent intent = getIntent();
         if (intent != null) {

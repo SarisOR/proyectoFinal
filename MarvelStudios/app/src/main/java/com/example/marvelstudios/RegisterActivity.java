@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.util.Calendar;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -53,10 +54,14 @@ public class RegisterActivity extends AppCompatActivity {
                     editor.putString("date", date);
                     editor.putString("password", password);
                     editor.apply();
-                    Toast.makeText(RegisterActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                    startActivity(i);
-                    finish();
+                    if (!validEmail(email))
+                        Toast.makeText(RegisterActivity.this, "Correo inválido", Toast.LENGTH_SHORT).show();
+                    else {
+                        Toast.makeText(RegisterActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                        startActivity(i);
+                        finish();
+                    }
                 }
             }
         });
@@ -77,4 +82,9 @@ public class RegisterActivity extends AppCompatActivity {
                 }, year, month, day);
         datePickerDialog.show();
     }
+    private boolean validEmail(String correo) {
+        String regex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        return pattern.matcher(correo).matches();
+        }
 }
