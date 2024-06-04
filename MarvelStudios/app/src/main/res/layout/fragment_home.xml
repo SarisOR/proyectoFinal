@@ -7,14 +7,25 @@
     android:orientation="vertical"
     android:background="@drawable/fondo">
 
-    <EditText
-        android:id="@+id/edtSearch"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Buscar superhéroe"
-        android:layout_margin="20dp"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"/>
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_margin="20dp">
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_search"
+            android:layout_marginRight="10dp"/>
+        <EditText
+            android:id="@+id/edtSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Buscar superhéroe"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

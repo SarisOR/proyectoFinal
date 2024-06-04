@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,7 +24,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.marvelstudios.adaptadores.SuperheroAdaptador;
+import com.example.marvelstudios.clases.Comic;
 import com.example.marvelstudios.clases.Superhero;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +37,11 @@ import java.util.List;
 public class RequestFragment extends Fragment {
 
     List<String> comicTitles = new ArrayList<>();
+    List<Comic> comicList = new ArrayList<>();
     Spinner spnComics;
     Button btnRequest;
+    TextView txtComic;
+    ImageView imgComic;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,6 +49,8 @@ public class RequestFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_request, container, false);
         btnRequest = view.findViewById(R.id.btnRequest);
         spnComics = view.findViewById(R.id.spnComics);
+        txtComic = view.findViewById(R.id.txtComic);
+        imgComic = view.findViewById(R.id.imgComic);
         loadInfo();
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +60,26 @@ public class RequestFragment extends Fragment {
                     Toast.makeText(getContext(), "Por favor, seleccione un cómic", Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(getContext(), "Cómic seleccionado", Toast.LENGTH_SHORT).show();
+            }
+        });
+        spnComics.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position > 0) {
+                    Comic selectedComic = comicList.get(position - 1);
+                    txtComic.setText(selectedComic.getTitle());
+                    Picasso.get().load(selectedComic.getImage()).into(imgComic);
+                    txtComic.setVisibility(View.VISIBLE);
+                    imgComic.setVisibility(View.VISIBLE);
+                } else {
+                    txtComic.setVisibility(View.GONE);
+                    imgComic.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
         return view;
@@ -83,6 +113,9 @@ public class RequestFragment extends Fragment {
             for (int i = 0; i<data.getJSONArray("results").length(); i++){
                 String title = data.getJSONArray("results").getJSONObject(i).getString("title");
                 comicTitles.add(title);
+                String image = data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("path") + "." + data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("extension");
+                Comic c = new Comic(title, image);
+                comicList.add(c);
             }
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), R.layout.spinner_style, comicTitles);
             adapter.setDropDownViewResource(R.layout.spinner_style2);
