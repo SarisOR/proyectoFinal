@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,17 +36,36 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
     List<Superhero> superheroList = new ArrayList<>();
     RecyclerView rcvSuperhero;
     SuperheroAdaptador adaptador;
+    EditText edtSearch;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         rcvSuperhero = view.findViewById(R.id.rcvSuperhero);
+        edtSearch = view.findViewById(R.id.edtSearch);
 
         rcvSuperhero.setLayoutManager(new LinearLayoutManager(getContext()));
         adaptador = new SuperheroAdaptador(superheroList);
         rcvSuperhero.setAdapter(adaptador);
         adaptador.setOnItemClickListener(this);
+
+        edtSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adaptador.filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         loadInfo();
         return view;
@@ -80,7 +102,7 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
                 Superhero s = new Superhero(name, id, image);
                 superheroList.add(s);
             }
-            adaptador.notifyDataSetChanged();
+            adaptador.setDatos(superheroList);
         } catch (JSONException e){
             e.printStackTrace();
             Toast.makeText(getContext(), "Error"+e.getMessage(), Toast.LENGTH_LONG).show();

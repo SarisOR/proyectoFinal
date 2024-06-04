@@ -14,14 +14,19 @@ import com.example.marvelstudios.clases.Superhero;
 import com.example.marvelstudios.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SuperheroAdaptador extends RecyclerView.Adapter<SuperheroAdaptador.ViewHolder> {
 
     private List<Superhero> datos;
-    public SuperheroAdaptador(List<Superhero> datos){
+    private List<Superhero> datosFull;
+
+    public SuperheroAdaptador(List<Superhero> datos) {
         this.datos = datos;
+        this.datosFull = new ArrayList<>(datos);
     }
+
     private OnItemClickListener listener;
 
     public void setOnItemClickListener(HomeFragment listener) {
@@ -73,6 +78,27 @@ public class SuperheroAdaptador extends RecyclerView.Adapter<SuperheroAdaptador.
     }
     public interface OnItemClickListener {
         void onItemClick(Superhero superhero);
+    }
+
+    public void filter(String text) {
+        datos.clear();
+        if (text.isEmpty()) {
+            datos.addAll(datosFull);
+        } else {
+            text = text.toLowerCase();
+            for (Superhero item : datosFull) {
+                if (item.getName().toLowerCase().contains(text)) {
+                    datos.add(item);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void setDatos(List<Superhero> newDatos) {
+        datos = new ArrayList<>(newDatos);
+        datosFull = new ArrayList<>(newDatos);
+        notifyDataSetChanged();
     }
 
 }
