@@ -55,31 +55,17 @@ public class RequestFragment extends Fragment {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectedComic = spnComics.getSelectedItem().toString();
-                if (selectedComic.isEmpty() || selectedComic.equals("Selecciona un cómic"))
+                int selectedPosition = spnComics.getSelectedItemPosition();
+                if (selectedPosition==0)
                     Toast.makeText(getContext(), "Por favor, seleccione un cómic", Toast.LENGTH_SHORT).show();
-                else
+                else {
                     Toast.makeText(getContext(), "Cómic seleccionado", Toast.LENGTH_SHORT).show();
-            }
-        });
-        spnComics.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0) {
-                    Comic selectedComic = comicList.get(position - 1);
+                    Comic selectedComic = comicList.get(selectedPosition - 1);
                     txtComic.setText(selectedComic.getTitle());
                     Picasso.get().load(selectedComic.getImage()).into(imgComic);
                     txtComic.setVisibility(View.VISIBLE);
                     imgComic.setVisibility(View.VISIBLE);
-                } else {
-                    txtComic.setVisibility(View.GONE);
-                    imgComic.setVisibility(View.GONE);
                 }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
         return view;
