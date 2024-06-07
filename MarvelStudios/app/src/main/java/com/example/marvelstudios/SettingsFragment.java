@@ -12,15 +12,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.marvelstudios.clases.Superhero;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class SettingsFragment extends Fragment {
 
-    SharedPreferences sharedPreferences;
-    public static final String dataUser = "dataUser";
-    private static final int modoPrivate = Context.MODE_PRIVATE;
     TextView txtName, txtEmail, txtDate;
     Button btnLogout;
-    String name, email, date;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,23 +39,64 @@ public class SettingsFragment extends Fragment {
         txtEmail = view.findViewById(R.id.txtEmail);
         txtDate = view.findViewById(R.id.txtDate);
         btnLogout = view.findViewById(R.id.btnLogout);
-        sharedPreferences = getActivity().getSharedPreferences("user", Context.MODE_PRIVATE);
-        name = sharedPreferences.getString("name", "");
-        email = sharedPreferences.getString("email", "");
-        date = sharedPreferences.getString("date", "");
-        txtName.setText(name);
-        txtEmail.setText(email);
-        txtDate.setText(date);
+
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences configuration = getActivity().getSharedPreferences(dataUser, modoPrivate);
-                configuration.edit().clear().commit();
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 startActivity(i);
                 getActivity().finish();
             }
         });
+        loadInfo();
         return view;
+    }
+
+    private void loadInfo() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("userId", null);
+
+        if (userId == null) {
+            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String url="http://10.0.2.2:3100/api/" + userId;
+        StringRequest myRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    receiveResponse(new JSONObject(response));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Error en el servidor", Toast.LENGTH_LONG).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "Error en el servidor", Toast.LENGTH_LONG).show();
+            }
+        });
+        RequestQueue rq = Volley.newRequestQueue(requireContext());
+        rq.add(myRequest);
+    }
+
+    private void receiveResponse(JSONObject response) {
+        try {
+            String name = response.getString("name");
+            String email = response.getString("email");
+            String date = response.getString("date");
+            txtName.setText(name);
+            txtEmail.setText(email);
+            txtDate.setText(date);
+        } catch (JSONException e){
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Error"+e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 }
