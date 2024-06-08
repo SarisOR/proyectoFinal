@@ -6,11 +6,13 @@ public class Superhero {
     private String name;
     private String id;
     private String image;
+    private String desc;
 
-    public Superhero(String name, String id, String image) {
+    public Superhero(String name, String id, String image, String desc) {
         this.name = name;
         this.id = id;
         this.image = image;
+        this.desc = desc;
     }
 
     public String getName() {
@@ -37,5 +39,12 @@ public class Superhero {
         this.image = image;
     }
 
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String des) {
+        this.desc = desc;
+    }
 }
 

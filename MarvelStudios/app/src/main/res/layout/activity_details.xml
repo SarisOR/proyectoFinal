@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_vertical|center_horizontal">
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_margin="15dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -36,5 +37,14 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:id="@+id/imgSuperhero"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtDesc"
+        android:text="Desc"
+        android:textColor="@color/black"
+        android:layout_marginTop="15dp"
+        android:layout_margin="50dp"/>
 
 </LinearLayout>

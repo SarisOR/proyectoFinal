@@ -43,29 +43,21 @@ public class SettingsFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
-                Intent i = new Intent(getActivity(), LoginActivity.class);
-                startActivity(i);
-                getActivity().finish();
+                logout();
             }
         });
         loadInfo();
+        loadInfo2();
         return view;
     }
 
     private void loadInfo() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-        String userId = sharedPreferences.getString("userId", null);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String userId = sharedPreferences.getString("id", "");
 
-        if (userId == null) {
-            Toast.makeText(getActivity(), "Usuario no autenticado", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        String url="http://10.0.2.2:3100/api/" + userId;
+        // String url="http://192.168.1.7:3100/api/users/" + userId; // ip mi casa
+        // String url = "http://10.0.2.2:3100/api/users/" + userId;
+        String url = "http://10.16.51.59:3100/api/users/" + userId; // ip uac
         StringRequest myRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -98,5 +90,25 @@ public class SettingsFragment extends Fragment {
             e.printStackTrace();
             Toast.makeText(getContext(), "Error"+e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void logout() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        sharedPreferences.edit().clear().apply();
+
+        Intent i = new Intent(getActivity(), LoginActivity.class);
+        startActivity(i);
+        requireActivity().finish();
+    }
+
+    private void loadInfo2(){
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE);
+        String name = sharedPreferences.getString("name", "");
+        String email = sharedPreferences.getString("email", "");
+        String date = sharedPreferences.getString("date", "");
+        txtName.setText(name);
+        txtEmail.setText(email);
+        txtDate.setText(date);
+
     }
 }

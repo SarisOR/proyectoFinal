@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    TextView txtName, txtId;
+    TextView txtName, txtId, txtDesc;
     ImageView imgSuperhero;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +26,17 @@ public class DetailsActivity extends AppCompatActivity {
         txtName = findViewById(R.id.txtName);
         txtId = findViewById(R.id.txtId);
         imgSuperhero = findViewById(R.id.imgSuperhero);
+        txtDesc = findViewById(R.id.txtDesc);
         Intent intent = getIntent();
         if (intent != null) {
             String name = intent.getStringExtra("name");
             String id = intent.getStringExtra("id");
             String image = intent.getStringExtra("image");
+            String desc = intent.getStringExtra("desc");
             txtName.setText(name);
             txtId.setText(id);
             Picasso.get().load(image).into(imgSuperhero);
-
+            txtDesc.setText(desc);
         }
     }
 }

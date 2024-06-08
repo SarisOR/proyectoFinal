@@ -60,12 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if (!validEmail(email))
                         Toast.makeText(RegisterActivity.this, "Correo inválido", Toast.LENGTH_SHORT).show();
                     else {
-                        Toast.makeText(RegisterActivity.this, "Usuario registrado con exito", Toast.LENGTH_SHORT).show();
                         saveInfo(name, email, date, password);
-
-                        Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(i);
-                        finish();
                     }
                 }
             }
@@ -96,7 +91,9 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void saveInfo(String name, String email, String date, String password) {
-        String url = "http://10.0.2.2:3100/api/register";
+        // String url = "http://192.168.1.7:3100/api/register"; // ip mi casa
+        // String url = "http://10.0.2.2:3100/api/register";
+        String url = "http://10.16.51.59:3100/api/register"; // ip uac
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("name", name);
@@ -105,31 +102,41 @@ public class RegisterActivity extends AppCompatActivity {
             jsonBody.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "Error en el servidor", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Error en el servidor1", Toast.LENGTH_LONG).show();
             return;
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, jsonBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                try {
-                    String userId = response.getString("userId");
-                    SharedPreferences sharedPreferences = getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("userId", userId);
-                    editor.apply();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(RegisterActivity.this, "Error al procesar la respuesta del servidor", Toast.LENGTH_LONG).show();
-                }
+                responseSave(response);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, "Error en el servidor", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_LONG).show();
             }
         });
         RequestQueue rq = Volley.newRequestQueue(this);
         rq.add(jsonObjectRequest);
+    }
+
+    private void responseSave(JSONObject response) {
+        try {
+            if (response.has("msg")) {
+                String message = response.getString("msg");
+                if (message.equalsIgnoreCase("1")) {
+                    Toast.makeText(RegisterActivity.this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_LONG).show();
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(RegisterActivity.this, "Error en el servidor", Toast.LENGTH_LONG).show();
+        }
     }
 }

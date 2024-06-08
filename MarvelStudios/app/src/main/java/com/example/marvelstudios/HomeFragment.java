@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,7 +98,8 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
                 String name = data.getJSONArray("results").getJSONObject(i).getString("name");
                 String id = data.getJSONArray("results").getJSONObject(i).getString("id");
                 String image = data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("path") + "." + data.getJSONArray("results").getJSONObject(i).getJSONObject("thumbnail").getString("extension");
-                Superhero s = new Superhero(name, id, image);
+                String desc = data.getJSONArray("results").getJSONObject(i).getString("description");
+                Superhero s = new Superhero(name, id, image, desc);
                 superheroList.add(s);
             }
             adaptador.setDatos(superheroList);
@@ -114,6 +114,7 @@ public class HomeFragment extends Fragment implements SuperheroAdaptador.OnItemC
         i.putExtra("name", selectedSuperhero.getName());
         i.putExtra("id", selectedSuperhero.getId());
         i.putExtra("image", selectedSuperhero.getImage());
+        i.putExtra("desc", selectedSuperhero.getDesc());
         startActivity(i);
     }
 }
